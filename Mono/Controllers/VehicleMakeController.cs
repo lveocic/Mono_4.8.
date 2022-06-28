@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Mono.MVC.Models;
 using Mono.Service.Models;
+using Mono.Service.Repository.Filters;
 using Mono.Service.Service.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -47,8 +49,12 @@ namespace Mono.MVC.Controllers
             return View(maker);
         }
 
+        
+       
+            
         [HttpDelete()]
         [Route("{id}")]
+
         public async Task<ActionResult> DeleteVehicleMaker(Guid id)
         {
             var vehicleMaker = await VehicleMakeService.FindVehicleMakerAsync(id);
@@ -59,7 +65,6 @@ namespace Mono.MVC.Controllers
             await VehicleMakeService.DeleteVehicleMakerAsync(vehicleMaker.Id);
             return new HttpStatusCodeResult(HttpStatusCode.NoContent);
         }
-
         [HttpGet()]
         [Route("{id}")]
         public async Task<VehicleMake> FindVehicleMaker(Guid id)
@@ -67,12 +72,17 @@ namespace Mono.MVC.Controllers
             return await VehicleMakeService.FindVehicleMakerAsync(id);
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string ids = "", string searchPhrase = "", int? page = 1, int? pageSize = 10)
         {
-            var result = VehicleMakeService.GetAllVehicleMakers();
+            var filter = new VehicleMakeFilter();
+            filter.SearchQuery = searchPhrase;
+            filter.Page = page;
+            filter.PageSize = pageSize;
+            filter.Ids = !String.IsNullOrWhiteSpace(ids) ? ids.Split(new string[] {","}, StringSplitOptions.None).Select(x => new Guid(x)) : new List<Guid>();
+            var result = VehicleMakeService.SearchVehicleMakers(filter);
             if (result != null)
             {
-                var restModel = Mapper.Map<IEnumerable<VehicleMakeRestModel>>(result);
+                var restModel = Mapper.Map<List<VehicleMakeRestModel>>(result);
                 return View(restModel);
             }
             var nullResult = new List<VehicleMakeRestModel>();
@@ -116,6 +126,23 @@ namespace Mono.MVC.Controllers
             await VehicleMakeService.UpdateVehicleMakerAsync(vehicleMake);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+
+        public async Task<ActionResult> Edit(Guid id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); 
+            }
+            var vehicleMaker = VehicleMakeService.FindVehicleMakerAsync(id);
+
+            if (vehicleMaker == null)
+            {
+                return HttpNotFound();
+            }
+            return View(Mapper.Map<VehicleMakeRestModel>(vehicleMaker));
+        }
+
+
 
         #endregion Methods
     }

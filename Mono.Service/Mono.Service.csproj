@@ -139,7 +139,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\MonoZadatakContext.cs" />
+    <Compile Include="DAL\MonoContext.cs" />
     <Compile Include="DAL\VehicleMakeEntity.cs" />
     <Compile Include="DAL\VehicleModelEntity.cs" />
     <Compile Include="DIModule.cs" />
