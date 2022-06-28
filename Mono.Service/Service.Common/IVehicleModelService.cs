@@ -1,4 +1,5 @@
 ﻿using Mono.Service.Models;
+using Mono.Service.Repository.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Mono.Service.Service.Common
     public interface IVehicleModelService
     {
         #region Methods
-
+        Task<IEnumerable<VehicleModel>> SearchVehicleModels(IVehicleModelFilter filter);
         Task DeleteVehicleModelAsync(Guid id);
 
         Task<VehicleModel> FindVehicleModelAsync(Guid id);

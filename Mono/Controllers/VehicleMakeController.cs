@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Mono.MVC.Models;
+using Mono.Models;
 using Mono.Service.Models;
 using Mono.Service.Repository.Filters;
 using Mono.Service.Service.Common;
@@ -10,7 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace Mono.MVC.Controllers
+namespace Mono.Controllers
 {
     public class VehicleMakeController : Controller
     {
@@ -47,10 +47,7 @@ namespace Mono.MVC.Controllers
                 return RedirectToAction("Index");
             }
             return View(maker);
-        }
-
-        
-       
+        }    
             
         [HttpDelete()]
         [Route("{id}")]

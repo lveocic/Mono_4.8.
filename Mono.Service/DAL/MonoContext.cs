@@ -15,5 +15,7 @@ namespace Mono.Service.DAL
         public DbSet<VehicleModelEntity> VehicleModels { get; set; }
 
         #endregion Properties
+
+        //public System.Data.Entity.DbSet<Mono.Models.VehicleModelRestModel> VehicleModelRestModels { get; set; }
     }
 }

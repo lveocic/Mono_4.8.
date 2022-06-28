@@ -229,7 +229,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VehicleMakeController.cs" />
-    <Compile Include="Controllers\VehicleModelController.cs" />
+    <Compile Include="Controllers\VehicleModelRestModelsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -273,6 +273,11 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\VehicleModelRestModels\Create.cshtml" />
+    <Content Include="Views\VehicleModelRestModels\Delete.cshtml" />
+    <Content Include="Views\VehicleModelRestModels\Details.cshtml" />
+    <Content Include="Views\VehicleModelRestModels\Edit.cshtml" />
+    <Content Include="Views\VehicleModelRestModels\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
