@@ -10,7 +10,7 @@ namespace Mono.Service.DAL
     public class MonoContext : DbContext
     {
         #region Properties
-
+       
         public DbSet<VehicleMakeEntity> VehicleMakers { get; set; }
         public DbSet<VehicleModelEntity> VehicleModels { get; set; }
 

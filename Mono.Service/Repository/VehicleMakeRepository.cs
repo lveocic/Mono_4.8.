@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Mono.Service.Repository
 {
-    public class VehicleMakeRepository : VehicleMakeFilter, IVehicleMakeRepository
+    public class VehicleMakeRepository : IVehicleMakeRepository
     {
         #region Fields
 
@@ -39,7 +39,7 @@ namespace Mono.Service.Repository
 
         #region Methods
 
-        public Task<IQueryable<VehicleMakeEntity>> ApplyFilteringAsync(IQueryable<VehicleMakeEntity> query, IFilter filter)
+        public Task<IQueryable<VehicleMakeEntity>> ApplyFilteringAsync(IQueryable<VehicleMakeEntity> query, IVehicleMakeFilter filter)
         {
             if (filter.SearchQuery != null)
             {
@@ -55,7 +55,7 @@ namespace Mono.Service.Repository
             return Task.FromResult(query);
         }
 
-        public Task<IQueryable<VehicleMakeEntity>> ApplyPagingAsync(IQueryable<VehicleMakeEntity> query, IFilter filter)
+        public Task<IQueryable<VehicleMakeEntity>> ApplyPagingAsync(IQueryable<VehicleMakeEntity> query, IVehicleMakeFilter filter)
         {
             if (filter != null)
             {
@@ -67,7 +67,7 @@ namespace Mono.Service.Repository
             return Task.FromResult(query);
         }
 
-        public Task<IQueryable<VehicleMakeEntity>> ApplySortingAsync(IQueryable<VehicleMakeEntity> query, IFilter filter)
+        public Task<IQueryable<VehicleMakeEntity>> ApplySortingAsync(IQueryable<VehicleMakeEntity> query, IVehicleMakeFilter filter)
         {
             if (!string.IsNullOrWhiteSpace(filter.OrderBy) && !string.IsNullOrWhiteSpace(filter.OrderDirection))
             {
@@ -88,6 +88,7 @@ namespace Mono.Service.Repository
 
         public async Task<VehicleMake> FindAsync(Guid id)
         {
+            
             return Mapper.Map<VehicleMake>(await Context.VehicleMakers.FindAsync(id));
         }
 
@@ -106,6 +107,15 @@ namespace Mono.Service.Repository
         {
             Context.Entry(entity).State = EntityState.Modified;
             Context.SaveChanges();
+        }
+
+        public async Task<IEnumerable<VehicleMake>> FindVehicleMaker (IVehicleMakeFilter filter)
+        {
+            IQueryable<VehicleMakeEntity> query = Context.Set<VehicleMakeEntity>();
+            query = await ApplyFilteringAsync(query, filter);
+            query = await ApplySortingAsync(query, filter);
+            query = await ApplyPagingAsync(query, filter);
+            return Mapper.Map<IEnumerable<VehicleMake>>(await query.ToListAsync());
         }
 
         #endregion Methods

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Mono.Service.DAL;
 using Mono.Service.Models;
+using Mono.Service.Models.Common;
 using Mono.Service.Repository.Common;
+using Mono.Service.Repository.Filters;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -59,6 +61,58 @@ namespace Mono.Service.Repository
         {
             Context.Entry(entity).State = EntityState.Modified;
             await Context.SaveChangesAsync();
+        }
+        public Task<IQueryable<VehicleModelEntity>> ApplyFilteringAsync(IQueryable<VehicleModelEntity> query, IVehicleModelFilter filter)
+        {
+            if (filter.SearchQuery != null)
+            {
+                if (!string.IsNullOrWhiteSpace(filter.SearchQuery))
+                {
+                    query = query.Where(x => x.Name.ToLower().Contains(filter.SearchQuery.ToLower()));
+                }
+                if (filter.Ids != null && filter.Ids.Any())
+                {
+                    query = query.Where(x => filter.Ids.Contains(x.Id));
+                }
+                if (filter.VehicleMakeIds != null && filter.VehicleMakeIds.Any())
+                {
+                    query = query.Where(x => filter.VehicleMakeIds.Contains(x.MakeId));
+                }
+            }
+            return Task.FromResult(query);
+        }
+
+        public Task<IQueryable<VehicleModelEntity>> ApplyPagingAsync(IQueryable<VehicleModelEntity> query, IVehicleModelFilter filter)
+        {
+            if (filter != null)
+            {
+                if (filter.Page.HasValue && filter.PageSize.HasValue)
+                {
+                    query = query.Skip((filter.Page.Value - 1) * filter.PageSize.Value).Take(filter.PageSize.Value);
+                }
+            }
+            return Task.FromResult(query);
+        }
+
+        public Task<IQueryable<VehicleModelEntity>> ApplySortingAsync(IQueryable<VehicleModelEntity> query, IVehicleModelFilter filter)
+        {
+            if (!string.IsNullOrWhiteSpace(filter.OrderBy) && !string.IsNullOrWhiteSpace(filter.OrderDirection))
+            {
+                if (filter.OrderBy == nameof(IVehicleModel.Name))
+                {
+                    query = filter.OrderDirection == "asc" ? query.OrderBy(x => x.Name) : query.OrderByDescending(x => x.Name);
+                }
+            }
+            return Task.FromResult(query);
+        }
+
+        public async Task<IEnumerable<VehicleModel>> FindVehicleModel(IVehicleModelFilter filter)
+        {
+            IQueryable<VehicleModelEntity> query = Context.Set<VehicleModelEntity>();
+            query = await ApplyFilteringAsync(query, filter);
+            query = await ApplySortingAsync(query, filter);
+            query = await ApplyPagingAsync(query, filter);
+            return Mapper.Map<IEnumerable<VehicleModel>>(await query.ToListAsync());
         }
 
         #endregion Methods

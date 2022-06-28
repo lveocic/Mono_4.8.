@@ -2,6 +2,7 @@
 using Mono.Service.DAL;
 using Mono.Service.Models;
 using Mono.Service.Repository.Common;
+using Mono.Service.Repository.Filters;
 using Mono.Service.Service.Common;
 using System;
 using System.Collections.Generic;
@@ -67,6 +68,11 @@ namespace Mono.Service.Service
         {
             vehicleMake.Id = Guid.NewGuid();
             vehicleMake.Abrv = vehicleMake.Name.ToLower().Replace(" ", "-").Replace("č", "c").Replace("ć", "c").Replace("ž", "z").Replace("š", "s").Replace("đ", "d");
+        }
+
+        public async Task <IEnumerable<VehicleMake>> SearchVehicleMakers (IVehicleMakeFilter filter)
+        {
+            return await VehicleMakeRepository.FindVehicleMaker(filter);
         }
 
         #endregion Methods

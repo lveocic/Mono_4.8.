@@ -1,5 +1,6 @@
 ﻿using Mono.Service.DAL;
 using Mono.Service.Models;
+using Mono.Service.Repository.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Mono.Service.Repository.Common
         #region Methods
 
         Task DeleteAsync(Guid id);
+        Task<IEnumerable<VehicleMake>> FindVehicleMaker(IVehicleMakeFilter filter);
 
         Task<VehicleMake> FindAsync(Guid id);
 

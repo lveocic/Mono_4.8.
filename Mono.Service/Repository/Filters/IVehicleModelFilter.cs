@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Mono.Service.Repository.Filters
 {
-    public interface IVehicleModelFilter
+    public interface IVehicleModelFilter : IFilter
     {
         #region Properties
 

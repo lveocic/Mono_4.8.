@@ -2,6 +2,7 @@
 using Mono.Service.DAL;
 using Mono.Service.Models;
 using Mono.Service.Repository.Common;
+using Mono.Service.Repository.Filters;
 using Mono.Service.Service.Common;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,10 @@ namespace Monok.Service.Service
             vehicleModel.Abrv = vehicleModel.Name.ToLower().Replace(" ", "-").Replace("č", "c").Replace("ć", "c").Replace("ž", "z").Replace("š", "s").Replace("đ", "d");
         }
 
+        public async Task<IEnumerable<VehicleModel>> SearchVehicleMakers(IVehicleModelFilter filter)
+        {
+            return await VehicleModelRepository.FindVehicleModel(filter);
+        }
         #endregion Methods
     }
 }
