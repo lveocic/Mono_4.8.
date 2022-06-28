@@ -143,6 +143,11 @@
     <Compile Include="DAL\VehicleMakeEntity.cs" />
     <Compile Include="DAL\VehicleModelEntity.cs" />
     <Compile Include="DIModule.cs" />
+    <Compile Include="Migrations\202206281726569_Mono.cs" />
+    <Compile Include="Migrations\202206281726569_Mono.designer.cs">
+      <DependentUpon>202206281726569_Mono.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models.Common\IVehicleMake.cs" />
     <Compile Include="Models.Common\IVehicleModel.cs" />
     <Compile Include="Models\VehicleMake.cs" />
@@ -167,6 +172,11 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202206281726569_Mono.resx">
+      <DependentUpon>202206281726569_Mono.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\Mono\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets" Condition="Exists('..\Mono\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets')" />

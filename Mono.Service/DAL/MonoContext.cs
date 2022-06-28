@@ -9,6 +9,10 @@ namespace Mono.Service.DAL
 {
     public class MonoContext : DbContext
     {
+        public MonoContext() : base("MonoContext")
+        {
+
+        }
         #region Properties
        
         public DbSet<VehicleMakeEntity> VehicleMakers { get; set; }
@@ -16,6 +20,6 @@ namespace Mono.Service.DAL
 
         #endregion Properties
 
-        //public System.Data.Entity.DbSet<Mono.Models.VehicleModelRestModel> VehicleModelRestModels { get; set; }
+       
     }
 }
