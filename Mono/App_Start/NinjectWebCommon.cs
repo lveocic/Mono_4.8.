@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Web;
+using AutoMapper;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using Mono.Mapping;
 using Mono.Service;
 using Ninject;
 using Ninject.Web.Common;
@@ -11,8 +13,6 @@ using Ninject.Web.Common.WebHost;
 
 namespace Mono.App_Start
 {
-   
-
     public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -46,6 +46,10 @@ namespace Mono.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+                var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile<EntityToDomainMapping>(); });
+                kernel.Bind<IMapper>().ToConstructor(c => new Mapper(mapperConfiguration)).InSingletonScope();
+
+                var mapper = kernel.Get<IMapper>();
 
                 RegisterServices(kernel);
                 return kernel;

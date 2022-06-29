@@ -33,44 +33,37 @@ namespace Mono.Service.Service
 
         #region Methods
 
-        public async Task DeleteVehicleMakerAsync(Guid id)
+        public async Task DeleteVehicleMakeAsync(Guid id)
         {
             await VehicleMakeRepository.DeleteAsync(id);
         }
 
-        public async Task<VehicleMake> FindVehicleMakerAsync(Guid id)
+        public async Task<VehicleMake> FindVehicleMakeAsync(Guid id)
         {
-            var result = VehicleMakeRepository.FindAsync(id);
-            return Mapper.Map<VehicleMake>(result);
+            return await VehicleMakeRepository.FindAsync(id);
         }
 
-        public async Task<IEnumerable<VehicleMake>> GetAllVehicleMakers()
+        public async Task<VehicleMake> InsertVehicleMakeAsync(VehicleMake vehicleMake)
         {
-            var result = await VehicleMakeRepository.GetAllAsync();
-            return result;
-        }
-
-        public async Task<VehicleMake> InsertVehicleMakerAsync(VehicleMake vehicleMake)
-        {
-            CreateVehicleMaker(vehicleMake);
+            CreateVehicleMake(vehicleMake);
             var entity = Mapper.Map<VehicleMakeEntity>(vehicleMake);
             var result = await VehicleMakeRepository.InsertAsync(entity);
             return result;
         }
 
-        public async Task UpdateVehicleMakerAsync(VehicleMake vehicleMake)
+        public async Task UpdateVehicleMakeAsync(VehicleMake vehicleMake)
         {
             var entity = Mapper.Map<VehicleMakeEntity>(vehicleMake);
             await VehicleMakeRepository.UpdateAsync(entity);
         }
 
-        private void CreateVehicleMaker(VehicleMake vehicleMake)
+        private void CreateVehicleMake(VehicleMake vehicleMake)
         {
             vehicleMake.Id = Guid.NewGuid();
             vehicleMake.Abrv = vehicleMake.Name.ToLower().Replace(" ", "-").Replace("č", "c").Replace("ć", "c").Replace("ž", "z").Replace("š", "s").Replace("đ", "d");
         }
 
-        public async Task <IEnumerable<VehicleMake>> SearchVehicleMakers (IVehicleMakeFilter filter)
+        public async Task<IEnumerable<VehicleMake>> SearchVehicleMakers(IVehicleMakeFilter filter)
         {
             return await VehicleMakeRepository.FindVehicleMaker(filter);
         }

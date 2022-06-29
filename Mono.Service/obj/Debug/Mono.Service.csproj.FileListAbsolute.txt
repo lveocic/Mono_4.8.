@@ -1,3 +1,7 @@
+C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.csproj.AssemblyReference.cache
+C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.Migrations.Mono.resources
+C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.csproj.GenerateResource.cache
+C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.csproj.CoreCompileInputs.cache
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\Mono.Service.dll.config
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\Mono.Service.dll
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\Mono.Service.pdb
@@ -60,10 +64,6 @@ C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\System.Web.Razor.xml
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\System.Web.WebPages.xml
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\System.Web.WebPages.Razor.xml
-C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.csproj.AssemblyReference.cache
-C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.Migrations.Mono.resources
-C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.csproj.GenerateResource.cache
-C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.csproj.CoreCompileInputs.cache
 C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.csproj.CopyComplete
 C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.dll
 C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.pdb

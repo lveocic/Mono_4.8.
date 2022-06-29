@@ -1,3 +1,5 @@
+C:\Projects\Zadnji\Mono\Mono\obj\Debug\Mono.csproj.AssemblyReference.cache
+C:\Projects\Zadnji\Mono\Mono\obj\Debug\Mono.csproj.CoreCompileInputs.cache
 C:\Projects\Zadnji\Mono\Mono\bin\Mono.dll.config
 C:\Projects\Zadnji\Mono\Mono\bin\Mono.dll
 C:\Projects\Zadnji\Mono\Mono\bin\Mono.pdb
@@ -120,8 +122,6 @@ C:\Projects\Zadnji\Mono\Mono\bin\System.Web.WebPages.Deployment.xml
 C:\Projects\Zadnji\Mono\Mono\bin\System.Web.WebPages.Razor.xml
 C:\Projects\Zadnji\Mono\Mono\bin\Antlr3.Runtime.pdb
 C:\Projects\Zadnji\Mono\Mono\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Projects\Zadnji\Mono\Mono\obj\Debug\Mono.csproj.AssemblyReference.cache
-C:\Projects\Zadnji\Mono\Mono\obj\Debug\Mono.csproj.CoreCompileInputs.cache
 C:\Projects\Zadnji\Mono\Mono\obj\Debug\Mono.csproj.CopyComplete
 C:\Projects\Zadnji\Mono\Mono\obj\Debug\Mono.dll
 C:\Projects\Zadnji\Mono\Mono\obj\Debug\Mono.pdb

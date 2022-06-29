@@ -46,8 +46,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -229,10 +229,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VehicleMakeController.cs" />
-    <Compile Include="Controllers\VehicleModelRestModelsController.cs" />
+    <Compile Include="Controllers\VehicleModelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\EntityToDomainMapping.cs" />
     <Compile Include="Models\VehicleMakeRestModel.cs" />
     <Compile Include="Models\VehicleModelRestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -273,11 +274,16 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\VehicleModelRestModels\Create.cshtml" />
-    <Content Include="Views\VehicleModelRestModels\Delete.cshtml" />
-    <Content Include="Views\VehicleModelRestModels\Details.cshtml" />
-    <Content Include="Views\VehicleModelRestModels\Edit.cshtml" />
-    <Content Include="Views\VehicleModelRestModels\Index.cshtml" />
+    <Content Include="Views\VehicleModel\Create.cshtml" />
+    <Content Include="Views\VehicleModel\Delete.cshtml" />
+    <Content Include="Views\VehicleModel\Details.cshtml" />
+    <Content Include="Views\VehicleModel\Edit.cshtml" />
+    <Content Include="Views\VehicleModel\Index.cshtml" />
+    <Content Include="Views\VehicleMake\Create.cshtml" />
+    <Content Include="Views\VehicleMake\Delete.cshtml" />
+    <Content Include="Views\VehicleMake\Details.cshtml" />
+    <Content Include="Views\VehicleMake\Edit.cshtml" />
+    <Content Include="Views\VehicleMake\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

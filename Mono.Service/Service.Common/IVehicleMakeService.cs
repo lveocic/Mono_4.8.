@@ -12,15 +12,13 @@ namespace Mono.Service.Service.Common
     {
         #region Methods
         Task<IEnumerable<VehicleMake>> SearchVehicleMakers(IVehicleMakeFilter filter);
-        Task DeleteVehicleMakerAsync(Guid id);
+        Task DeleteVehicleMakeAsync(Guid id);
 
-        Task<VehicleMake> FindVehicleMakerAsync(Guid id);
+        Task<VehicleMake> FindVehicleMakeAsync(Guid id);
 
-        Task<IEnumerable<VehicleMake>> GetAllVehicleMakers();
+        Task<VehicleMake> InsertVehicleMakeAsync(VehicleMake vehicleMake);
 
-        Task<VehicleMake> InsertVehicleMakerAsync(VehicleMake vehicleMake);
-
-        Task UpdateVehicleMakerAsync(VehicleMake vehicleMake);
+        Task UpdateVehicleMakeAsync(VehicleMake vehicleMake);
 
         #endregion Methods
     }

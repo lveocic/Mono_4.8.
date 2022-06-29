@@ -40,8 +40,7 @@ namespace Monok.Service.Service
 
         public async Task<VehicleModel> FindVehicleModelAsync(Guid id)
         {
-            var result = VehicleModelRepository.FindAsync(id);
-            return Mapper.Map<VehicleModel>(result);
+            return await VehicleModelRepository.FindAsync(id);    
         }
 
         public async Task<VehicleModel> InsertVehicleModelAsync(VehicleModel vehicleModel)

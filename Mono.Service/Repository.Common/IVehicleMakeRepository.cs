@@ -18,8 +18,6 @@ namespace Mono.Service.Repository.Common
 
         Task<VehicleMake> FindAsync(Guid id);
 
-        Task<IEnumerable<VehicleMake>> GetAllAsync();
-
         Task<VehicleMake> InsertAsync(VehicleMakeEntity entity);
 
         Task UpdateAsync(VehicleMakeEntity entity);

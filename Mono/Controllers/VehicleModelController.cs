@@ -16,11 +16,11 @@ using Mono.Models;
 
 namespace Mono.Controllers
 {
-    public class VehicleModelRestModelsController : Controller
+    public class VehicleModelController : Controller
     {
         public IMapper Mapper { get; set; }
         public IVehicleModelService VehicleModelService { get; set; }
-        public VehicleModelRestModelsController(IMapper mapper, IVehicleModelService vehicleModelService)
+        public VehicleModelController(IMapper mapper, IVehicleModelService vehicleModelService)
         {
             Mapper = mapper;
             VehicleModelService = vehicleModelService;

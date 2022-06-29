@@ -1,146 +1,144 @@
-﻿using AutoMapper;
-using Mono.Models;
-using Mono.Service.Models;
-using Mono.Service.Repository.Filters;
-using Mono.Service.Service.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using Mono.Models;
+using Mono.Service.DAL;
+using AutoMapper;
+using Mono.Service.Service.Common;
+using Mono.Service.Repository.Filters;
+using Mono.Service.Models;
 
 namespace Mono.Controllers
 {
     public class VehicleMakeController : Controller
     {
-        #region Constructors
-
-        public VehicleMakeController(IVehicleMakeService vehicleMakeService, IMapper mapper)
-        {
-            VehicleMakeService = vehicleMakeService;
-            Mapper = mapper;
-        }
-
-        #endregion Constructors
-
-        #region Properties
-
         public IMapper Mapper { get; set; }
         public IVehicleMakeService VehicleMakeService { get; set; }
-
-        #endregion Properties
-
-        #region Methods
-
-        public ActionResult Create()
+        public VehicleMakeController(IMapper mapper, IVehicleMakeService vehicleMakeService)
         {
-            return View();
+            Mapper = mapper;
+            VehicleMakeService = vehicleMakeService;
         }
 
-        [HttpPost]
-        public ActionResult Create(VehicleMakeRestModel maker)
-        {
-            if (maker != null)
-            {
-                VehicleMakeService.InsertVehicleMakerAsync(Mapper.Map<VehicleMake>(maker));
-                return RedirectToAction("Index");
-            }
-            return View(maker);
-        }    
-            
-        [HttpDelete()]
-        [Route("{id}")]
 
-        public async Task<ActionResult> DeleteVehicleMaker(Guid id)
-        {
-            var vehicleMaker = await VehicleMakeService.FindVehicleMakerAsync(id);
-            if (vehicleMaker == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-            }
-            await VehicleMakeService.DeleteVehicleMakerAsync(vehicleMaker.Id);
-            return new HttpStatusCodeResult(HttpStatusCode.NoContent);
-        }
-        [HttpGet()]
-        [Route("{id}")]
-        public async Task<VehicleMake> FindVehicleMaker(Guid id)
-        {
-            return await VehicleMakeService.FindVehicleMakerAsync(id);
-        }
-
-        public ActionResult Index(string ids = "", string searchPhrase = "", int? page = 1, int? pageSize = 10)
+        // GET: VehicleMakeRestModels
+        public async Task<ActionResult> Index(string ids = "", string searchPhrase = "", int? page = 1, int? pageSize = 10)
         {
             var filter = new VehicleMakeFilter();
             filter.SearchQuery = searchPhrase;
             filter.Page = page;
             filter.PageSize = pageSize;
-            filter.Ids = !String.IsNullOrWhiteSpace(ids) ? ids.Split(new string[] {","}, StringSplitOptions.None).Select(x => new Guid(x)) : new List<Guid>();
+            filter.Ids = !String.IsNullOrWhiteSpace(ids) ? ids.Split(new string[] { "," }, StringSplitOptions.None).Select(x => new Guid(x)) : new List<Guid>();
             var result = VehicleMakeService.SearchVehicleMakers(filter);
             if (result != null)
             {
-                var restModel = Mapper.Map<List<VehicleMakeRestModel>>(result);
-                return View(restModel);
+                
+                return View(result);
             }
             var nullResult = new List<VehicleMakeRestModel>();
             return View(nullResult);
         }
 
-        /*
-        public IActionResult Index()
+        // GET: VehicleMakeRestModels/Details/5
+        public async Task<ActionResult> Details(Guid id)
         {
-            var result = VehicleMakeService.GetAllVehicleMakers();
-            if (result != null)
+            if (id == null)
             {
-                var restModel = Mapper.Map<IEnumerable<VehicleMakeRestModel>>(result);
-                return View(restModel);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var nullResult = new List<VehicleMakeRestModel>();
-            return View(nullResult);
-        }
-        */
-
-        [HttpPost]
-        public async Task<VehicleMake> PostVehicleMaker(/*[FromBody]*/ VehicleMake vehicleMake)
-        {
-            var newVehicleMaker = await VehicleMakeService.InsertVehicleMakerAsync(vehicleMake);
-            return newVehicleMaker;
+            var vehicleMake = Mapper.Map<VehicleMake>(await VehicleMakeService.FindVehicleMakeAsync(id));
+            if (vehicleMake == null)
+            {
+                return HttpNotFound();
+            }
+            return View(vehicleMake);
         }
 
-        public ActionResult Privacy()
+        // GET: VehicleMakeRestModels/Create
+        public ActionResult Create()
         {
             return View();
         }
 
-        [HttpPut]
-        public async Task<ActionResult> PutVehicleMaker(Guid id, /*[FromBody]*/ VehicleMake vehicleMake)
+        // POST: VehicleMakeRestModels/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "Id,Abrv,MakeId,Name")] VehicleMakeRestModel vehicleMakeRestModel)
         {
-            if (id != vehicleMake.Id)
+            if (ModelState.IsValid)
+            {
+                vehicleMakeRestModel.Id = Guid.NewGuid();
+                var vehicleMake = Mapper.Map<VehicleMake>(vehicleMakeRestModel);
+                await VehicleMakeService.InsertVehicleMakeAsync(vehicleMake);
+                return RedirectToAction("Index");
+            }
+
+            return View(vehicleMakeRestModel);
+        }
+
+        // GET: VehicleMakeRestModels/Edit/5
+        public async Task<ActionResult> Edit(Guid id)
+        {
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            await VehicleMakeService.UpdateVehicleMakerAsync(vehicleMake);
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
-        }
-
-        public async Task<ActionResult> Edit(Guid id)
-        {
-            if(id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); 
-            }
-            var vehicleMaker = VehicleMakeService.FindVehicleMakerAsync(id);
-
-            if (vehicleMaker == null)
+            var vehicleMake = Mapper.Map<VehicleMake>(await VehicleMakeService.FindVehicleMakeAsync(id));
+            if (vehicleMake == null)
             {
                 return HttpNotFound();
             }
-            return View(Mapper.Map<VehicleMakeRestModel>(vehicleMaker));
+            return View(vehicleMake);
+        }
+
+        // POST: VehicleMakeRestModels/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Abrv,MakeId,Name")] VehicleMakeRestModel vehicleMakeRestModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var vehicleMake = Mapper.Map<VehicleMake>(vehicleMakeRestModel);
+                await VehicleMakeService.UpdateVehicleMakeAsync(vehicleMake);
+                return RedirectToAction("Index");
+            }
+            return View(vehicleMakeRestModel);
+        }
+
+        // GET: VehicleMakeRestModels/Delete/5
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var vehicleMake = Mapper.Map<VehicleMake>(await VehicleMakeService.FindVehicleMakeAsync(id));
+            if (vehicleMake == null)
+            {
+                return HttpNotFound();
+            }
+            return View(vehicleMake);
         }
 
 
+        // POST: VehicleMakeRestModels/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(Guid id)
+        {
 
-        #endregion Methods
+            await VehicleMakeService.DeleteVehicleMakeAsync(id);
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -39,6 +39,30 @@ namespace Mono.Service.Repository
 
         #region Methods
 
+        public async Task DeleteAsync(Guid id)
+        {
+            var vehicleModel = Context.VehicleMakers.Find(id);
+            Context.VehicleMakers.Remove(vehicleModel);
+            await Context.SaveChangesAsync();
+        }
+
+        public async Task<VehicleMake> FindAsync(Guid id)
+        {
+            return Mapper.Map<VehicleMake>(await Context.VehicleMakers.FindAsync(id));
+        }
+
+        public async Task<VehicleMake> InsertAsync(VehicleMakeEntity entity)
+        {
+            var insert = Context.VehicleMakers.Add(entity);
+            await Context.SaveChangesAsync();
+            return Mapper.Map<VehicleMake>(insert);
+        }
+
+        public async Task UpdateAsync(VehicleMakeEntity entity)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+            await Context.SaveChangesAsync();
+        }
         public Task<IQueryable<VehicleMakeEntity>> ApplyFilteringAsync(IQueryable<VehicleMakeEntity> query, IVehicleMakeFilter filter)
         {
             if (filter.SearchQuery != null)
@@ -79,37 +103,7 @@ namespace Mono.Service.Repository
             return Task.FromResult(query);
         }
 
-        public async Task DeleteAsync(Guid id)
-        {
-            var vehicleMaker = Context.VehicleMakers.Find(id);
-            Context.VehicleMakers.Remove(vehicleMaker);
-            await Context.SaveChangesAsync();
-        }
-
-        public async Task<VehicleMake> FindAsync(Guid id)
-        {
-            
-            return Mapper.Map<VehicleMake>(await Context.VehicleMakers.FindAsync(id));
-        }
-
-        public async Task<IEnumerable<VehicleMake>> GetAllAsync()
-        {
-            return Mapper.Map<IEnumerable<VehicleMake>>(await Context.VehicleMakers.ToListAsync());
-        }
-
-        public async Task<VehicleMake> InsertAsync(VehicleMakeEntity entity)
-        {
-            var insert = Context.VehicleMakers.Add(entity);
-            return Mapper.Map<VehicleMake>(await Context.SaveChangesAsync());
-        }
-
-        public async Task UpdateAsync(VehicleMakeEntity entity)
-        {
-            Context.Entry(entity).State = EntityState.Modified;
-            Context.SaveChanges();
-        }
-
-        public async Task<IEnumerable<VehicleMake>> FindVehicleMaker (IVehicleMakeFilter filter)
+        public async Task<IEnumerable<VehicleMake>> FindVehicleMaker(IVehicleMakeFilter filter)
         {
             IQueryable<VehicleMakeEntity> query = Context.Set<VehicleMakeEntity>();
             query = await ApplyFilteringAsync(query, filter);

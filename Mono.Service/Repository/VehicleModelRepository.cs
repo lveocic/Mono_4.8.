@@ -54,7 +54,8 @@ namespace Mono.Service.Repository
         public async Task<VehicleModel> InsertAsync(VehicleModelEntity entity)
         {
             var insert = Context.VehicleModels.Add(entity);
-            return Mapper.Map<VehicleModel>(await Context.SaveChangesAsync());
+            await Context.SaveChangesAsync();
+            return Mapper.Map<VehicleModel>(insert);
         }
 
         public async Task UpdateAsync(VehicleModelEntity entity)
