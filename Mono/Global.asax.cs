@@ -17,7 +17,7 @@ namespace Mono
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            EntityToDomainMapping.AutoMapperMapping();
+            AutoMapperConfig.RegisterMappings();
 
         }
     }

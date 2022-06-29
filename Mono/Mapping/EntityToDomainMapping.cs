@@ -14,14 +14,14 @@ namespace Mono.Mapping
     public class EntityToDomainMapping : Profile
     {
         #region Constructors
-
-        public static void AutoMapperMapping()
+        
+        protected override void Configure()
         {
             AutoMapper.Mapper.Initialize(config => {
-                config.CreateMap<IVehicleModel, VehicleModelRestModel>().ReverseMap();
-                config.CreateMap<IVehicleMake, VehicleMakeRestModel>().ReverseMap();
-                config.CreateMap<IVehicleModel, VehicleModelEntity>().ReverseMap();
-                config.CreateMap<IVehicleMake, VehicleMakeEntity>().ReverseMap();
+                config.CreateMap<VehicleModel, VehicleModelRestModel>();
+                config.CreateMap<VehicleMake, VehicleMakeRestModel>();
+                config.CreateMap<VehicleModelEntity, VehicleModel>();
+                config.CreateMap<VehicleMakeEntity, VehicleMake > ();
             });
         }
 

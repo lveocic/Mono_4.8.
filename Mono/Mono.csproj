@@ -233,6 +233,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\AutoMapperConfig.cs" />
+    <Compile Include="Mapping\DomainToEntityMapping.cs" />
     <Compile Include="Mapping\EntityToDomainMapping.cs" />
     <Compile Include="Models\VehicleMakeRestModel.cs" />
     <Compile Include="Models\VehicleModelRestModel.cs" />

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Monok.Service.Service
+namespace Mono.Service.Service
 {
     public class VehicleModelService : IVehicleModelService
     {

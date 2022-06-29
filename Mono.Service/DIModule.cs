@@ -4,7 +4,7 @@ using Mono.Service.Repository;
 using Mono.Service.Repository.Common;
 using Mono.Service.Service;
 using Mono.Service.Service.Common;
-using Monok.Service.Service;
+using Mono.Service.Service;
 using Ninject.Modules;
 using System;
 

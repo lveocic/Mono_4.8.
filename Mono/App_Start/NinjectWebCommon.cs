@@ -4,9 +4,16 @@ using AutoMapper;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Mono.Mapping;
 using Mono.Service;
+using Mono.Service.Models;
+using Mono.Service.Repository;
+using Mono.Service.Repository.Common;
+using Mono.Service.Service;
+using Mono.Service.Service.Common;
+using Mono.Service.Service;
 using Ninject;
 using Ninject.Web.Common;
 using Ninject.Web.Common.WebHost;
+using Mono.Service.Models.Common;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Mono.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Mono.App_Start.NinjectWebCommon), "Stop")]
@@ -46,10 +53,7 @@ namespace Mono.App_Start
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-                var mapperConfiguration = new MapperConfiguration(cfg => { cfg.AddProfile<EntityToDomainMapping>(); });
-                kernel.Bind<IMapper>().ToConstructor(c => new Mapper(mapperConfiguration)).InSingletonScope();
-
-                var mapper = kernel.Get<IMapper>();
+                
 
                 RegisterServices(kernel);
                 return kernel;
@@ -67,6 +71,14 @@ namespace Mono.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            
+            kernel.Bind<IVehicleMakeRepository>().To<VehicleMakeRepository>();
+            kernel.Bind<IVehicleMakeService>().To<VehicleMakeService>();
+            kernel.Bind<IVehicleMake>().To<VehicleMake>();
+
+            kernel.Bind<IVehicleModelRepository>().To<VehicleModelRepository>();
+            kernel.Bind<IVehicleModelService>().To<VehicleModelService>();
+            kernel.Bind<IVehicleModel>().To<VehicleModel>();
         }
     }
 }
