@@ -98,6 +98,14 @@ namespace Mono.Service.Repository
                 {
                     query = filter.OrderDirection == "asc" ? query.OrderBy(x => x.Name) : query.OrderByDescending(x => x.Name);
                 }
+                else
+                {
+                    query = query.OrderBy(x => x.Name);
+                }
+            }
+            else
+            {
+                query = query.OrderBy(x => x.Name);
             }
             return Task.FromResult(query);
         }
