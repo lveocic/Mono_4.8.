@@ -35,7 +35,6 @@ namespace Mono.Service.Service
         {
             await VehicleMakeRepository.DeleteAsync(id);
         }
-
         public async Task<VehicleMake> FindVehicleMakeAsync(Guid id)
         {
             return await VehicleMakeRepository.FindAsync(id);

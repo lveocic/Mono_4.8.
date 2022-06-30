@@ -30,17 +30,29 @@ namespace Mono.Controllers
 
 
         // GET: VehicleModelRestModels
-        public async Task<ActionResult> Index(string ids = "", string searchPhrase = "", int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> Index(string sortOrder, string ids = "", string searchPhrase = "", int? page = 1, int? pageSize = 10)
         {
             var filter = new VehicleModelFilter();
             filter.SearchQuery = searchPhrase;
             filter.Page = page;
             filter.PageSize = pageSize;
             filter.Ids = !String.IsNullOrWhiteSpace(ids) ? ids.Split(new string[] { "," }, StringSplitOptions.None).Select(x => new Guid(x)) : new List<Guid>();
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            if (String.IsNullOrEmpty(sortOrder))
+            {
+                ViewBag.NameSortParm = "name_desc";
+                filter.OrderBy = "Name";
+                filter.OrderDirection = "desc";
+            } else
+            {
+                ViewBag.NameSortParm = "";
+                filter.OrderBy = "Name";
+                filter.OrderDirection = "asc";
+            }
             var result = await VehicleModelService.SearchVehicleModels(filter);
             if (result != null)
             {
-                var restModel = Mapper.Map<List<VehicleModelRestModel>>(result);
+                var restModel = Mapper.Map<List<VehicleModelRestModel>>(result);  
                 return View(restModel);
             }
             var nullResult = new List<VehicleModelRestModel>();
