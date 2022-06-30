@@ -18,12 +18,14 @@ namespace Mono.Controllers
 {
     public class VehicleModelController : Controller
     {
-        public IMapper Mapper { get; set; }
+
         public IVehicleModelService VehicleModelService { get; set; }
-        public VehicleModelController(IMapper mapper, IVehicleModelService vehicleModelService)
+        public IVehicleMakeService VehicleMakeService { get; set; }
+
+        public VehicleModelController(IVehicleModelService vehicleModelService, IVehicleMakeService vehicleMakeService)
         {
-            Mapper = mapper;
             VehicleModelService = vehicleModelService;
+            VehicleMakeService = vehicleMakeService;
         }
 
 
@@ -35,7 +37,7 @@ namespace Mono.Controllers
             filter.Page = page;
             filter.PageSize = pageSize;
             filter.Ids = !String.IsNullOrWhiteSpace(ids) ? ids.Split(new string[] { "," }, StringSplitOptions.None).Select(x => new Guid(x)) : new List<Guid>();
-            var result = VehicleModelService.SearchVehicleModels(filter);
+            var result = await VehicleModelService.SearchVehicleModels(filter);
             if (result != null)
             {
                 var restModel = Mapper.Map<List<VehicleModelRestModel>>(result);
@@ -52,17 +54,18 @@ namespace Mono.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var vehicleModel = Mapper.Map<VehicleModel>(await VehicleModelService.FindVehicleModelAsync(id));
-            if (vehicleModel == null)
+            var result = await VehicleModelService.FindVehicleModelAsync(id);
+            if (result == null)
             {
                 return HttpNotFound();
             }
-            return View(vehicleModel);
+            return View(Mapper.Map<VehicleModelRestModel>(result));
         }
 
         // GET: VehicleModelRestModels/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            ViewBag.Makers = new SelectList(await VehicleMakeService.SearchVehicleMakers(new VehicleMakeFilter()), "Id", "Name");
             return View();
         }
 
@@ -91,11 +94,12 @@ namespace Mono.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var vehicleModel = Mapper.Map<VehicleModel>(await VehicleModelService.FindVehicleModelAsync(id));
+            var vehicleModel = Mapper.Map<VehicleModelRestModel>(await VehicleModelService.FindVehicleModelAsync(id));
             if (vehicleModel == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.Makers = new SelectList(await VehicleMakeService.SearchVehicleMakers(new VehicleMakeFilter()), "Id", "Name", vehicleModel.VehicleMakeId);
             return View(vehicleModel);
         }
 
@@ -104,7 +108,7 @@ namespace Mono.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Abrv,MakeId,Name")] VehicleModelRestModel vehicleModelRestModel)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Abrv,VehicleMakeId,Name")] VehicleModelRestModel vehicleModelRestModel)
         {
             if (ModelState.IsValid)
             {
@@ -122,7 +126,7 @@ namespace Mono.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var vehicleModel = Mapper.Map<VehicleModel>(await VehicleModelService.FindVehicleModelAsync(id));
+            var vehicleModel = Mapper.Map<VehicleModelRestModel>(await VehicleModelService.FindVehicleModelAsync(id));
             if (vehicleModel == null)
             {
                 return HttpNotFound();

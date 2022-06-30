@@ -23,17 +23,15 @@ namespace Mono.Service.Repository
 
         #region Constructors
 
-        public VehicleModelRepository(MonoContext context, IMapper mapper)
+        public VehicleModelRepository(MonoContext context)
         {
             Context = context;
-            Mapper = mapper;
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public IMapper Mapper { get; set; }
 
         #endregion Properties
 
@@ -48,7 +46,15 @@ namespace Mono.Service.Repository
 
         public async Task<VehicleModel> FindAsync(Guid id)
         {
-            return Mapper.Map<VehicleModel>(await Context.VehicleModels.FindAsync(id));
+            try
+            {
+                var result = await Context.VehicleModels.Include(x => x.VehicleMake).FirstOrDefaultAsync(q => q.Id == id);
+                return Mapper.Map<VehicleModel>(result);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception($"{this.ToString()} - find failed", exception);
+            }
         }
 
         public async Task<VehicleModel> InsertAsync(VehicleModelEntity entity)
@@ -77,7 +83,7 @@ namespace Mono.Service.Repository
                 }
                 if (filter.VehicleMakeIds != null && filter.VehicleMakeIds.Any())
                 {
-                    query = query.Where(x => filter.VehicleMakeIds.Contains(x.MakeId));
+                    query = query.Where(x => filter.VehicleMakeIds.Contains(x.VehicleMakeId));
                 }
             }
             return Task.FromResult(query);
@@ -106,14 +112,21 @@ namespace Mono.Service.Repository
             }
             return Task.FromResult(query);
         }
-
         public async Task<IEnumerable<VehicleModel>> FindVehicleModel(IVehicleModelFilter filter)
         {
-            IQueryable<VehicleModelEntity> query = Context.Set<VehicleModelEntity>();
-            query = await ApplyFilteringAsync(query, filter);
-            query = await ApplySortingAsync(query, filter);
-            query = await ApplyPagingAsync(query, filter);
-            return Mapper.Map<IEnumerable<VehicleModel>>(await query.ToListAsync());
+            try
+            {
+                IQueryable<VehicleModelEntity> query = Context.VehicleModels;
+                query = await ApplyFilteringAsync(query, filter);
+                query = await ApplySortingAsync(query, filter);
+                query = await ApplyPagingAsync(query, filter);
+                var result = await query.Include(x => x.VehicleMake).ToListAsync();
+                return Mapper.Map<IEnumerable<VehicleModel>>(result);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception($"{this.ToString()} - find failed", exception);
+            }
         }
 
         #endregion Methods

@@ -177,6 +177,9 @@
       <DependentUpon>202206281726569_Mono.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\PagedList.css" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\Mono\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets" Condition="Exists('..\Mono\packages\System.Text.Json.6.0.0\build\System.Text.Json.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

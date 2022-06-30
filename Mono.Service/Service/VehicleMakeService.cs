@@ -16,17 +16,15 @@ namespace Mono.Service.Service
     {
         #region Constructors
 
-        public VehicleMakeService(IVehicleMakeRepository vehicleMakeRepository, IMapper mapper)
+        public VehicleMakeService(IVehicleMakeRepository vehicleMakeRepository)
         {
             VehicleMakeRepository = vehicleMakeRepository;
-            Mapper = mapper;
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public IMapper Mapper { get; set; }
         public IVehicleMakeRepository VehicleMakeRepository { get; set; }
 
         #endregion Properties

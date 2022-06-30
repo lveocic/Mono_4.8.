@@ -12,7 +12,7 @@ namespace Mono.Service.Models.Common
 
         string Abrv { get; set; }
         Guid Id { get; set; }
-        Guid MakeId { get; set; }
+        Guid VehicleMakeId { get; set; }
         string Name { get; set; }
         IVehicleMake VehicleMake { get; set; }
 

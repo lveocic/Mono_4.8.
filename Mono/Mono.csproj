@@ -234,8 +234,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mapping\AutoMapperConfig.cs" />
-    <Compile Include="Mapping\DomainToEntityMapping.cs" />
-    <Compile Include="Mapping\EntityToDomainMapping.cs" />
     <Compile Include="Models\VehicleMakeRestModel.cs" />
     <Compile Include="Models\VehicleModelRestModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -245,6 +243,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

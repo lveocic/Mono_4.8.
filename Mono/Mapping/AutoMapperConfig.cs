@@ -1,4 +1,8 @@
 ﻿using AutoMapper;
+using Mono.Models;
+using Mono.Service.DAL;
+using Mono.Service.Models;
+using Mono.Service.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +12,21 @@ namespace Mono.Mapping
 {
     public class AutoMapperConfig
     {
-        
-            public static void RegisterMappings()
+
+        public static void RegisterMappings()
+        {
+            AutoMapper.Mapper.Initialize(config =>
             {
-                Mapper.Initialize(x =>
-                {
-                    x.AddProfile<EntityToDomainMapping>();
-                    x.AddProfile<DomainToEntityMapping>();
-                   
-                });
-            }
-        
+                config.CreateMap<IVehicleModel, VehicleModelRestModel>().ReverseMap();
+                config.CreateMap<VehicleModel, VehicleModelRestModel>().ReverseMap();
+                config.CreateMap<IVehicleMake, VehicleMakeRestModel>().ReverseMap();
+                config.CreateMap<VehicleMake, VehicleMakeRestModel>().ReverseMap();
+                config.CreateMap<VehicleMake, VehicleMakeEntity>().ReverseMap();
+                config.CreateMap<IVehicleMake, VehicleMakeEntity>().ReverseMap();
+                config.CreateMap<VehicleModel, VehicleModelEntity>().ReverseMap();
+                config.CreateMap<IVehicleModel, VehicleModelEntity>().ReverseMap();
+            });
+
+        }
     }
 }

@@ -18,11 +18,9 @@ namespace Mono.Controllers
 {
     public class VehicleMakeController : Controller
     {
-        public IMapper Mapper { get; set; }
         public IVehicleMakeService VehicleMakeService { get; set; }
-        public VehicleMakeController(IMapper mapper, IVehicleMakeService vehicleMakeService)
+        public VehicleMakeController(IVehicleMakeService vehicleMakeService)
         {
-            Mapper = mapper;
             VehicleMakeService = vehicleMakeService;
         }
 

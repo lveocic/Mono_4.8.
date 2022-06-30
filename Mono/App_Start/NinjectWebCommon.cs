@@ -9,7 +9,6 @@ using Mono.Service.Repository;
 using Mono.Service.Repository.Common;
 using Mono.Service.Service;
 using Mono.Service.Service.Common;
-using Mono.Service.Service;
 using Ninject;
 using Ninject.Web.Common;
 using Ninject.Web.Common.WebHost;
@@ -72,13 +71,13 @@ namespace Mono.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             
-            kernel.Bind<IVehicleMakeRepository>().To<VehicleMakeRepository>();
-            kernel.Bind<IVehicleMakeService>().To<VehicleMakeService>();
-            kernel.Bind<IVehicleMake>().To<VehicleMake>();
+           // kernel.Bind<IVehicleMakeRepository>().To<VehicleMakeRepository>();
+           // kernel.Bind<IVehicleMakeService>().To<VehicleMakeService>();
+           // kernel.Bind<IVehicleMake>().To<VehicleMake>();
 
-            kernel.Bind<IVehicleModelRepository>().To<VehicleModelRepository>();
-            kernel.Bind<IVehicleModelService>().To<VehicleModelService>();
-            kernel.Bind<IVehicleModel>().To<VehicleModel>();
+           // kernel.Bind<IVehicleModelRepository>().To<VehicleModelRepository>();
+           // kernel.Bind<IVehicleModelService>().To<VehicleModelService>();
+           // kernel.Bind<IVehicleModel>().To<VehicleModel>();
         }
     }
 }

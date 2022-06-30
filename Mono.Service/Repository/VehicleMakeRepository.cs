@@ -23,17 +23,15 @@ namespace Mono.Service.Repository
 
         #region Constructors
 
-        public VehicleMakeRepository(MonoContext context, IMapper mapper)
+        public VehicleMakeRepository(MonoContext context)
         {
             Context = context;
-            Mapper = mapper;
         }
 
         #endregion Constructors
 
         #region Properties
 
-        public IMapper Mapper { get; set; }
 
         #endregion Properties
 
@@ -50,6 +48,7 @@ namespace Mono.Service.Repository
         {
             return Mapper.Map<VehicleMake>(await Context.VehicleMakers.FindAsync(id));
         }
+
 
         public async Task<VehicleMake> InsertAsync(VehicleMakeEntity entity)
         {
@@ -109,7 +108,8 @@ namespace Mono.Service.Repository
             query = await ApplyFilteringAsync(query, filter);
             query = await ApplySortingAsync(query, filter);
             query = await ApplyPagingAsync(query, filter);
-            return Mapper.Map<IEnumerable<VehicleMake>>(await query.ToListAsync());
+            var result = await query.ToListAsync();
+            return Mapper.Map<IEnumerable<VehicleMake>>(result);
         }
 
         #endregion Methods
