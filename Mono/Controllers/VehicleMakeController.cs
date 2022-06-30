@@ -14,6 +14,7 @@ using Mono.Service.Service.Common;
 using Mono.Service.Repository.Filters;
 using Mono.Service.Models;
 
+
 namespace Mono.Controllers
 {
     public class VehicleMakeController : Controller
@@ -67,14 +68,13 @@ namespace Mono.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Abrv,MakeId,Name")] VehicleMakeRestModel vehicleMakeRestModel)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Abrv,VehicleMakeId,Name")] VehicleMakeRestModel vehicleMakeRestModel)
         {
             if (ModelState.IsValid)
             {
-                vehicleMakeRestModel.Id = Guid.NewGuid();
                 var vehicleMake = Mapper.Map<VehicleMake>(vehicleMakeRestModel);
                 await VehicleMakeService.InsertVehicleMakeAsync(vehicleMake);
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = vehicleMake.Id });
             }
 
             return View(vehicleMakeRestModel);
@@ -100,7 +100,7 @@ namespace Mono.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Abrv,MakeId,Name")] VehicleMakeRestModel vehicleMakeRestModel)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Abrv,Name")] VehicleMakeRestModel vehicleMakeRestModel)
         {
             if (ModelState.IsValid)
             {

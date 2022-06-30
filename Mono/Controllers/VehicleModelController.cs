@@ -75,7 +75,7 @@ namespace Mono.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Abrv,MakeId,Name")] VehicleModelRestModel vehicleModelRestModel)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Abrv,VehicleMakeId,Name")] VehicleModelRestModel vehicleModelRestModel)
         {
             if (ModelState.IsValid)
             {

@@ -149,10 +149,6 @@
     <Compile Include="DAL\VehicleMakeEntity.cs" />
     <Compile Include="DAL\VehicleModelEntity.cs" />
     <Compile Include="DIModule.cs" />
-    <Compile Include="Migrations\202206281726569_Mono.cs" />
-    <Compile Include="Migrations\202206281726569_Mono.designer.cs">
-      <DependentUpon>202206281726569_Mono.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202206300131062_Mono1.cs" />
     <Compile Include="Migrations\202206300131062_Mono1.designer.cs">
       <DependentUpon>202206300131062_Mono1.cs</DependentUpon>
@@ -183,9 +179,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202206281726569_Mono.resx">
-      <DependentUpon>202206281726569_Mono.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202206300131062_Mono1.resx">
       <DependentUpon>202206300131062_Mono1.cs</DependentUpon>
     </EmbeddedResource>
