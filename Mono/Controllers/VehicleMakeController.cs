@@ -33,14 +33,12 @@ namespace Mono.Controllers
             filter.Page = page;
             filter.PageSize = pageSize;
             filter.Ids = !String.IsNullOrWhiteSpace(ids) ? ids.Split(new string[] { "," }, StringSplitOptions.None).Select(x => new Guid(x)) : new List<Guid>();
-            var result = VehicleMakeService.SearchVehicleMakers(filter);
-            if (result != null)
+            var result = await VehicleMakeService.SearchVehicleMakers(filter);
+            if (result != null && result.Any())
             {
-                
-                return View(result);
+                return View(Mapper.Map<List<VehicleMakeRestModel>>(result));
             }
-            var nullResult = new List<VehicleMakeRestModel>();
-            return View(nullResult);
+            return View(new List<VehicleMakeRestModel>());
         }
 
         // GET: VehicleMakeRestModels/Details/5
@@ -50,7 +48,7 @@ namespace Mono.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var vehicleMake = Mapper.Map<VehicleMake>(await VehicleMakeService.FindVehicleMakeAsync(id));
+            var vehicleMake = Mapper.Map<VehicleMakeRestModel>(await VehicleMakeService.FindVehicleMakeAsync(id));
             if (vehicleMake == null)
             {
                 return HttpNotFound();
@@ -89,12 +87,12 @@ namespace Mono.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var vehicleMake = Mapper.Map<VehicleMake>(await VehicleMakeService.FindVehicleMakeAsync(id));
-            if (vehicleMake == null)
+            var vehicleMakeRestModel = Mapper.Map<VehicleMakeRestModel>(await VehicleMakeService.FindVehicleMakeAsync(id));
+            if (vehicleMakeRestModel == null)
             {
                 return HttpNotFound();
             }
-            return View(vehicleMake);
+            return View(vehicleMakeRestModel);
         }
 
         // POST: VehicleMakeRestModels/Edit/5
@@ -120,12 +118,12 @@ namespace Mono.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var vehicleMake = Mapper.Map<VehicleMake>(await VehicleMakeService.FindVehicleMakeAsync(id));
-            if (vehicleMake == null)
+            var vehicleMakeRestModel = Mapper.Map<VehicleMakeRestModel>(await VehicleMakeService.FindVehicleMakeAsync(id));
+            if (vehicleMakeRestModel == null)
             {
                 return HttpNotFound();
             }
-            return View(vehicleMake);
+            return View(vehicleMakeRestModel);
         }
 
 

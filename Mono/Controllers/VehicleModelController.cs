@@ -59,7 +59,8 @@ namespace Mono.Controllers
             {
                 return HttpNotFound();
             }
-            return View(Mapper.Map<VehicleModelRestModel>(result));
+            var vehicleModelRestModel = Mapper.Map<VehicleModelRestModel>(result);
+            return View(vehicleModelRestModel);
         }
 
         // GET: VehicleModelRestModels/Create
@@ -94,13 +95,13 @@ namespace Mono.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var vehicleModel = Mapper.Map<VehicleModelRestModel>(await VehicleModelService.FindVehicleModelAsync(id));
-            if (vehicleModel == null)
+            var vehicleModelRestModel = Mapper.Map<VehicleModelRestModel>(await VehicleModelService.FindVehicleModelAsync(id));
+            if (vehicleModelRestModel == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Makers = new SelectList(await VehicleMakeService.SearchVehicleMakers(new VehicleMakeFilter()), "Id", "Name", vehicleModel.VehicleMakeId);
-            return View(vehicleModel);
+            ViewBag.Makers = new SelectList(await VehicleMakeService.SearchVehicleMakers(new VehicleMakeFilter()), "Id", "Name", vehicleModelRestModel.VehicleMakeId);
+            return View(vehicleModelRestModel);
         }
 
         // POST: VehicleModelRestModels/Edit/5

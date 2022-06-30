@@ -66,6 +66,8 @@ C:\Projects\Zadnji\Mono\Mono\bin\Ninject.Web.Common.dll
 C:\Projects\Zadnji\Mono\Mono\bin\Ninject.Web.Common.WebHost.dll
 C:\Projects\Zadnji\Mono\Mono\bin\Ninject.Web.Mvc.dll
 C:\Projects\Zadnji\Mono\Mono\bin\Npgsql.dll
+C:\Projects\Zadnji\Mono\Mono\bin\PagedList.dll
+C:\Projects\Zadnji\Mono\Mono\bin\PagedList.Mvc.dll
 C:\Projects\Zadnji\Mono\Mono\bin\System.Buffers.dll
 C:\Projects\Zadnji\Mono\Mono\bin\System.Collections.Immutable.dll
 C:\Projects\Zadnji\Mono\Mono\bin\System.Diagnostics.DiagnosticSource.dll
@@ -100,6 +102,8 @@ C:\Projects\Zadnji\Mono\Mono\bin\Ninject.Web.Common.xml
 C:\Projects\Zadnji\Mono\Mono\bin\Ninject.Web.Common.WebHost.xml
 C:\Projects\Zadnji\Mono\Mono\bin\Ninject.Web.Mvc.xml
 C:\Projects\Zadnji\Mono\Mono\bin\Npgsql.xml
+C:\Projects\Zadnji\Mono\Mono\bin\PagedList.xml
+C:\Projects\Zadnji\Mono\Mono\bin\PagedList.Mvc.xml
 C:\Projects\Zadnji\Mono\Mono\bin\System.Buffers.xml
 C:\Projects\Zadnji\Mono\Mono\bin\System.Collections.Immutable.xml
 C:\Projects\Zadnji\Mono\Mono\bin\System.Diagnostics.DiagnosticSource.xml

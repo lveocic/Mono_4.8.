@@ -14,6 +14,8 @@ C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\Ninject.Web.Common.dll
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\Ninject.Web.Common.WebHost.dll
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\Ninject.Web.Mvc.dll
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\Npgsql.dll
+C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\PagedList.dll
+C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\PagedList.Mvc.dll
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\System.Buffers.dll
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\System.Collections.Immutable.dll
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\System.Diagnostics.DiagnosticSource.dll
@@ -43,6 +45,8 @@ C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\Ninject.Web.Common.xml
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\Ninject.Web.Common.WebHost.xml
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\Ninject.Web.Mvc.xml
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\Npgsql.xml
+C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\PagedList.xml
+C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\PagedList.Mvc.xml
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\System.Buffers.xml
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\System.Collections.Immutable.xml
 C:\Projects\Zadnji\Mono\Mono.Service\bin\Debug\System.Diagnostics.DiagnosticSource.xml
@@ -67,3 +71,4 @@ C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.csproj.CoreCompileIn
 C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.csproj.CopyComplete
 C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.dll
 C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.pdb
+C:\Projects\Zadnji\Mono\Mono.Service\obj\Debug\Mono.Service.Migrations.Mono1.resources
