@@ -75,7 +75,7 @@ namespace Mono.Service.Repository
             {
                 if (!string.IsNullOrWhiteSpace(filter.SearchQuery))
                 {
-                    query = query.Where(x => x.Name.ToLower().Contains(filter.SearchQuery.ToLower()));
+                    query = query.Where(x => x.VehicleMake.Name.ToLower().Contains(filter.SearchQuery.ToLower()));
                 }
                 if (filter.Ids != null && filter.Ids.Any())
                 {
