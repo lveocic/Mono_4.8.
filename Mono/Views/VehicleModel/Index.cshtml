@@ -1,10 +1,11 @@
-﻿@model IEnumerable<Mono.Models.VehicleModelRestModel>
+﻿@model Mono.Service.Repository.Filters.PagedList<Mono.Models.VehicleModelRestModel>
 
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Vehicle Models";
 }
 
-<h2>Index</h2>
+<h2>Vehicle Models</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -19,9 +20,7 @@
 }
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Abrv)
-        </th>
+        
         <th>
             Vehicle Make
         </th>
@@ -34,9 +33,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Abrv)
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.VehicleMake.Name)
             </td>
@@ -52,3 +49,19 @@
     }
 
 </table>
+<p>
+    @if (Model.HasPreviousPage)
+    {
+
+        @Html.ActionLink("<<<", "Index", new { page = (Model.PageIndex - 1) })
+
+    }
+
+    @if (Model.HasNextPage)
+    {
+
+        @Html.ActionLink(">>>", "Index", new { page = (Model.PageIndex + 1) })
+
+    }
+
+</p>

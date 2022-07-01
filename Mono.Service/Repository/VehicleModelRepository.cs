@@ -120,16 +120,19 @@ namespace Mono.Service.Repository
             }
             return Task.FromResult(query);
         }
-        public async Task<IEnumerable<VehicleModel>> FindVehicleModel(IVehicleModelFilter filter)
+        public async Task<PagedList<VehicleModel>> FindVehicleModel(IVehicleModelFilter filter)
         {
             try
             {
                 IQueryable<VehicleModelEntity> query = Context.VehicleModels;
                 query = await ApplyFilteringAsync(query, filter);
                 query = await ApplySortingAsync(query, filter);
+                int count = await query.CountAsync();
                 query = await ApplyPagingAsync(query, filter);
                 var result = await query.Include(x => x.VehicleMake).ToListAsync();
-                return Mapper.Map<IEnumerable<VehicleModel>>(result);
+                var mapped = Mapper.Map<List<VehicleModel>>(result);
+                PagedList<VehicleModel> pagedList = new PagedList<VehicleModel>(mapped, filter.Page.Value, filter.PageSize.Value, count);
+                return pagedList;
             }
             catch (Exception exception)
             {

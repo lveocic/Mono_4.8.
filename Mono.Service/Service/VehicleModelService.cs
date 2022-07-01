@@ -61,7 +61,7 @@ namespace Mono.Service.Service
             vehicleModel.Abrv = vehicleModel.Name.ToLower().Replace(" ", "-").Replace("č", "c").Replace("ć", "c").Replace("ž", "z").Replace("š", "s").Replace("đ", "d");
         }
 
-        public async Task<IEnumerable<VehicleModel>> SearchVehicleModels (IVehicleModelFilter filter)
+        public async Task<PagedList<VehicleModel>> SearchVehicleModels (IVehicleModelFilter filter)
         {
             return await VehicleModelRepository.FindVehicleModel(filter);
         }

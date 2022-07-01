@@ -13,7 +13,7 @@ namespace Mono.Service.Repository.Common
     {
         #region Methods
        
-        Task<IEnumerable<VehicleModel>> FindVehicleModel(IVehicleModelFilter filter);
+        Task<PagedList<VehicleModel>> FindVehicleModel(IVehicleModelFilter filter);
         Task DeleteAsync(Guid id);
 
         Task<VehicleModel> FindAsync(Guid id);

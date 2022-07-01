@@ -37,6 +37,7 @@ namespace Mono.Controllers
             filter.PageSize = pageSize;
             filter.Ids = !String.IsNullOrWhiteSpace(ids) ? ids.Split(new string[] { "," }, StringSplitOptions.None).Select(x => new Guid(x)) : new List<Guid>();
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            
             if (!String.IsNullOrEmpty(searchPhrase))
             {
                 filter.SearchQuery = searchPhrase;
@@ -52,11 +53,13 @@ namespace Mono.Controllers
                 filter.OrderBy = "Name";
                 filter.OrderDirection = "asc";
             }
+            
             var result = await VehicleModelService.SearchVehicleModels(filter);
             if (result != null)
             {
-                var restModel = Mapper.Map<List<VehicleModelRestModel>>(result);  
-                return View(restModel);
+                var list = Mapper.Map<List<VehicleModelRestModel>>(result);
+                var restModelList = new PagedList<VehicleModelRestModel>(list, result.PageIndex, result.PageSize, result.TotalCount);
+                return View(restModelList);
             }
             var nullResult = new List<VehicleModelRestModel>();
             return View(nullResult);

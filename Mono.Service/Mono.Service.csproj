@@ -165,6 +165,7 @@
     <Compile Include="Repository\Filters\IFilter.cs" />
     <Compile Include="Repository\Filters\IVehicleMakeFilter.cs" />
     <Compile Include="Repository\Filters\IVehicleModelFilter.cs" />
+    <Compile Include="Repository\Filters\PagedList.cs" />
     <Compile Include="Repository\Filters\VehicleMakeFilter.cs" />
     <Compile Include="Repository\Filters\VehicleModelFilter.cs" />
     <Compile Include="Repository\VehicleMakeRepository.cs" />
