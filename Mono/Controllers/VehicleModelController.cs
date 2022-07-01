@@ -84,7 +84,7 @@ namespace Mono.Controllers
         // GET: VehicleModelRestModels/Create
         public async Task<ActionResult> Create()
         {
-            ViewBag.Makers = new SelectList(await VehicleMakeService.GetAllVehicleMakers());
+            ViewBag.Makers = new SelectList(await VehicleMakeService.GetAllVehicleMakers(),"Id","Name");
             return View();
         }
 
