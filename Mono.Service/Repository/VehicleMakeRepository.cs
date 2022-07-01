@@ -110,14 +110,24 @@ namespace Mono.Service.Repository
             return Task.FromResult(query);
         }
 
-        public async Task<IEnumerable<VehicleMake>> FindVehicleMaker(IVehicleMakeFilter filter)
+        public async Task<PagedList<VehicleMake>> FindVehicleMake(IVehicleMakeFilter filter)
         {
-            IQueryable<VehicleMakeEntity> query = Context.Set<VehicleMakeEntity>();
-            query = await ApplyFilteringAsync(query, filter);
-            query = await ApplySortingAsync(query, filter);
-            query = await ApplyPagingAsync(query, filter);
-            var result = await query.ToListAsync();
-            return Mapper.Map<IEnumerable<VehicleMake>>(result);
+            try
+            {
+                IQueryable<VehicleMakeEntity> query = Context.VehicleMakers;
+                query = await ApplyFilteringAsync(query, filter);
+                query = await ApplySortingAsync(query, filter);
+                int count = await query.CountAsync();
+                query = await ApplyPagingAsync(query, filter);
+                var result = await query.ToListAsync();
+                var mapped = Mapper.Map<List<VehicleMake>>(result);
+                PagedList<VehicleMake> pagedList = new PagedList<VehicleMake>(mapped, filter.Page.Value, filter.PageSize.Value, count);
+                return pagedList;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception($"{this.ToString()} - find failed", exception);
+            }
         }
 
         #endregion Methods

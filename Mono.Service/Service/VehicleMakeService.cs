@@ -60,9 +60,9 @@ namespace Mono.Service.Service
             vehicleMake.Abrv = vehicleMake.Name.ToLower().Replace(" ", "-").Replace("č", "c").Replace("ć", "c").Replace("ž", "z").Replace("š", "s").Replace("đ", "d");
         }
 
-        public async Task<IEnumerable<VehicleMake>> SearchVehicleMakers(IVehicleMakeFilter filter)
+        public async Task<PagedList<VehicleMake>> SearchVehicleMakers(IVehicleMakeFilter filter)
         {
-            return await VehicleMakeRepository.FindVehicleMaker(filter);
+            return await VehicleMakeRepository.FindVehicleMake(filter);
         }
 
         #endregion Methods

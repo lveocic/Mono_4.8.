@@ -1,7 +1,8 @@
-﻿@model IEnumerable<Mono.Models.VehicleMakeRestModel>
+﻿@model Mono.Service.Repository.Filters.PagedList<Mono.Models.VehicleMakeRestModel>
 
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Vehicle Make";
 }
 
 <h2>Index</h2>
@@ -9,13 +10,17 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+@using (Html.BeginForm())
+{
+    <p>
+        Find by Vehicle Maker: @Html.TextBox("SearchPhrase")
+        <input type="submit" value="Search" />
+    </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Abrv)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th></th>
     </tr>
@@ -23,9 +28,7 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Abrv)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -38,3 +41,19 @@
     }
 
 </table>
+<p>
+    @if (Model.HasPreviousPage)
+    {
+
+        @Html.ActionLink("<<<", "Index", new { page = (Model.PageIndex - 1) })
+
+    }
+
+    @if (Model.HasNextPage)
+    {
+
+        @Html.ActionLink(">>>", "Index", new { page = (Model.PageIndex + 1) })
+
+    }
+
+</p>

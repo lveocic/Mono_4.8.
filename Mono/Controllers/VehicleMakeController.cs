@@ -27,19 +27,41 @@ namespace Mono.Controllers
 
 
         // GET: VehicleMakeRestModels
-        public async Task<ActionResult> Index(string ids = "", string searchPhrase = "", int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> Index(string sortOrder,string ids = "", string searchPhrase = "", int? page = 1, int? pageSize = 10)
         {
             var filter = new VehicleMakeFilter();
             filter.SearchQuery = searchPhrase;
             filter.Page = page;
             filter.PageSize = pageSize;
             filter.Ids = !String.IsNullOrWhiteSpace(ids) ? ids.Split(new string[] { "," }, StringSplitOptions.None).Select(x => new Guid(x)) : new List<Guid>();
-            var result = await VehicleMakeService.SearchVehicleMakers(filter);
-            if (result != null && result.Any())
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            if (!String.IsNullOrEmpty(searchPhrase))
             {
-                return View(Mapper.Map<List<VehicleMakeRestModel>>(result));
+                filter.SearchQuery = searchPhrase;
             }
-            return View(new List<VehicleMakeRestModel>());
+            if (String.IsNullOrEmpty(sortOrder))
+            {
+                ViewBag.NameSortParm = "name_desc";
+                filter.OrderBy = "Name";
+                filter.OrderDirection = "desc";
+            }
+            else
+            {
+                ViewBag.NameSortParm = "";
+                filter.OrderBy = "Name";
+                filter.OrderDirection = "asc";
+            }
+
+            var result = await VehicleMakeService.SearchVehicleMakers(filter);
+            if (result != null)
+            {
+                var list = Mapper.Map<List<VehicleMakeRestModel>>(result);
+                var restMakeList = new PagedList<VehicleMakeRestModel>(list, result.PageIndex, result.PageSize, result.TotalCount);
+                return View(restMakeList);
+            }
+            var nullResult = new List<VehicleMakeRestModel>();
+            return View(nullResult);
         }
 
 
