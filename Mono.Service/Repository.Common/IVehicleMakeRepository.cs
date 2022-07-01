@@ -12,7 +12,7 @@ namespace Mono.Service.Repository.Common
     public interface IVehicleMakeRepository
     {
         #region Methods
-
+        Task<IEnumerable<VehicleMake>> GetAllAsync();
         Task DeleteAsync(Guid id);
         Task<PagedList<VehicleMake>> FindVehicleMake(IVehicleMakeFilter filter);
 

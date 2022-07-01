@@ -11,6 +11,7 @@ namespace Mono.Service.Service.Common
     public interface IVehicleMakeService
     {
         #region Methods
+        Task<IEnumerable<VehicleMake>> GetAllVehicleMakers();
         Task<PagedList<VehicleMake>> SearchVehicleMakers(IVehicleMakeFilter filter);
         Task DeleteVehicleMakeAsync(Guid id);
 

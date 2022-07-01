@@ -49,6 +49,11 @@ namespace Mono.Service.Repository
             return Mapper.Map<VehicleMake>(await Context.VehicleMakers.FindAsync(id));
         }
 
+        public async Task<IEnumerable<VehicleMake>> GetAllAsync()
+        {
+            return Mapper.Map<IEnumerable<VehicleMake>>(await Context.VehicleMakers.ToListAsync());
+        }
+
 
         public async Task<VehicleMake> InsertAsync(VehicleMakeEntity entity)
         {
