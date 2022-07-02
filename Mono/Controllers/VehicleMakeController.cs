@@ -25,7 +25,18 @@ namespace Mono.Controllers
             VehicleMakeService = vehicleMakeService;
         }
 
+        [HttpGet]
+        [Route("all")]
+        public async Task<IEnumerable<VehicleMakeRestModel>> GetVehicleMakers()
+        {
+            var result = await VehicleMakeService.GetAllVehicleMakersAsync();
+            if(result != null)
+            {
+                return Mapper.Map<IEnumerable<VehicleMakeRestModel>>(result);
+            }
+            return new List<VehicleMakeRestModel>();
 
+        }
         // GET: VehicleMakeRestModels
         public async Task<ActionResult> Index(string sortOrder,string ids = "", string searchPhrase = "", int? page = 1, int? pageSize = 10)
         {

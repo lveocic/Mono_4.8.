@@ -65,7 +65,7 @@ namespace Mono.Service.Service
             return await VehicleMakeRepository.FindVehicleMake(filter);
         }
 
-        public async Task<IEnumerable<VehicleMake>> GetAllVehicleMakers()
+        public async Task<IEnumerable<VehicleMake>> GetAllVehicleMakersAsync()
         {
             return await VehicleMakeRepository.GetAllAsync();
         }
