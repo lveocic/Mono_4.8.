@@ -39,9 +39,16 @@ namespace Mono.Service.Repository
 
         public async Task DeleteAsync(Guid id)
         {
-            var vehicleModel = Context.VehicleModels.Find(id);
-            Context.VehicleModels.Remove(vehicleModel);
-            await Context.SaveChangesAsync();
+            try
+            {
+                var vehicleModel = Context.VehicleModels.Find(id);
+                Context.VehicleModels.Remove(vehicleModel);
+                await Context.SaveChangesAsync();
+            } 
+            catch (Exception exception)
+            {
+                throw new Exception($"{this.ToString()} - delete failed", exception);
+            }
         }
 
         public async Task<VehicleModel> FindAsync(Guid id)
@@ -59,15 +66,28 @@ namespace Mono.Service.Repository
 
         public async Task<VehicleModel> InsertAsync(VehicleModelEntity entity)
         {
-            var insert = Context.VehicleModels.Add(entity);
-            await Context.SaveChangesAsync();
-            return Mapper.Map<VehicleModel>(insert);
+            try
+            {
+                var insert = Context.VehicleModels.Add(entity);
+                await Context.SaveChangesAsync();
+                return Mapper.Map<VehicleModel>(insert);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception($"{this.ToString()} - insert failed", exception);
+            }
         }
 
         public async Task UpdateAsync(VehicleModelEntity entity)
         {
+            try{ 
             Context.Entry(entity).State = EntityState.Modified;
             await Context.SaveChangesAsync();
+            }
+            catch (Exception exception)
+            {
+                throw new Exception($"{this.ToString()} - update failed", exception);
+            }
         }
         public Task<IQueryable<VehicleModelEntity>> ApplyFilteringAsync(IQueryable<VehicleModelEntity> query, IVehicleModelFilter filter)
         {

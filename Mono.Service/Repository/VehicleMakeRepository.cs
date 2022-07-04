@@ -39,14 +39,28 @@ namespace Mono.Service.Repository
 
         public async Task DeleteAsync(Guid id)
         {
-            var vehicleModel = Context.VehicleMakers.Find(id);
-            Context.VehicleMakers.Remove(vehicleModel);
-            await Context.SaveChangesAsync();
+            try
+            {
+                var vehicleModel = Context.VehicleMakers.Find(id);
+                Context.VehicleMakers.Remove(vehicleModel);
+                await Context.SaveChangesAsync();
+            }
+            catch(Exception exception)
+            {
+                throw new Exception($"{this.ToString()} - delete failed", exception);
+            }
         }
 
         public async Task<VehicleMake> FindAsync(Guid id)
         {
-            return Mapper.Map<VehicleMake>(await Context.VehicleMakers.FindAsync(id));
+            try
+            {
+                return Mapper.Map<VehicleMake>(await Context.VehicleMakers.FindAsync(id));
+            }
+            catch(Exception exception)
+            {
+                throw new Exception($"{this.ToString()} - find failed", exception);
+            }
         }
 
         public async Task<IEnumerable<VehicleMake>> GetAllAsync()
@@ -57,15 +71,29 @@ namespace Mono.Service.Repository
 
         public async Task<VehicleMake> InsertAsync(VehicleMakeEntity entity)
         {
-            var insert = Context.VehicleMakers.Add(entity);
-            await Context.SaveChangesAsync();
-            return Mapper.Map<VehicleMake>(insert);
+            try
+            {
+                var insert = Context.VehicleMakers.Add(entity);
+                await Context.SaveChangesAsync();
+                return Mapper.Map<VehicleMake>(insert);
+            }
+            catch(Exception exception)
+            {
+                throw new Exception($"{this.ToString()} - insert failed", exception);
+            }
         }
 
         public async Task UpdateAsync(VehicleMakeEntity entity)
         {
-            Context.Entry(entity).State = EntityState.Modified;
-            await Context.SaveChangesAsync();
+            try
+            {
+                Context.Entry(entity).State = EntityState.Modified;
+                await Context.SaveChangesAsync();
+            }
+            catch(Exception exception)
+            {
+                throw new Exception($"{this.ToString()} - update failed", exception);
+            }
         }
         public Task<IQueryable<VehicleMakeEntity>> ApplyFilteringAsync(IQueryable<VehicleMakeEntity> query, IVehicleMakeFilter filter)
         {
