@@ -25,28 +25,13 @@ namespace Mono.Controllers
             VehicleMakeService = vehicleMakeService;
         }
 
-        [HttpGet]
-        [Route("all")]
-        public async Task<IEnumerable<VehicleMakeRestModel>> GetVehicleMakers()
-        {
-            var result = await VehicleMakeService.GetAllVehicleMakersAsync();
-            if(result != null)
-            {
-                return Mapper.Map<IEnumerable<VehicleMakeRestModel>>(result);
-            }
-            return new List<VehicleMakeRestModel>();
-
-        }
         // GET: VehicleMakeRestModels
-        public async Task<ActionResult> Index(string sortOrder,string ids = "", string searchPhrase = "", int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> Index(string sortOrder, string searchPhrase = "", int? page = 1, int? pageSize = 10)
         {
             var filter = new VehicleMakeFilter();
-            filter.SearchQuery = searchPhrase;
             filter.Page = page;
             filter.PageSize = pageSize;
-            filter.Ids = !String.IsNullOrWhiteSpace(ids) ? ids.Split(new string[] { "," }, StringSplitOptions.None).Select(x => new Guid(x)) : new List<Guid>();
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
+            
             if (!String.IsNullOrEmpty(searchPhrase))
             {
                 filter.SearchQuery = searchPhrase;
@@ -166,9 +151,13 @@ namespace Mono.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(Guid id)
         {
-
-            await VehicleMakeService.DeleteVehicleMakeAsync(id);
-            return RedirectToAction("Index");
+            if (VehicleMakeService.DeleteVehicleMake(id))
+            {
+                return RedirectToAction("Index");
+            }else
+            {
+                return HttpNotFound();
+            }
         }
     }
 }

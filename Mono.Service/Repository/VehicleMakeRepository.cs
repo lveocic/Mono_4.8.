@@ -37,18 +37,13 @@ namespace Mono.Service.Repository
 
         #region Methods
 
-        public async Task DeleteAsync(Guid id)
+        public bool Delete(Guid id)
         {
-            try
-            {
+            
                 var vehicleModel = Context.VehicleMakers.Find(id);
                 Context.VehicleMakers.Remove(vehicleModel);
-                await Context.SaveChangesAsync();
-            }
-            catch(Exception exception)
-            {
-                throw new Exception($"{this.ToString()} - delete failed", exception);
-            }
+                return Context.SaveChanges() > 0;
+            
         }
 
         public async Task<VehicleMake> FindAsync(Guid id)
@@ -97,7 +92,7 @@ namespace Mono.Service.Repository
         }
         public Task<IQueryable<VehicleMakeEntity>> ApplyFilteringAsync(IQueryable<VehicleMakeEntity> query, IVehicleMakeFilter filter)
         {
-            if (filter.SearchQuery != null)
+            if (filter != null)
             {
                 if (!string.IsNullOrWhiteSpace(filter.SearchQuery))
                 {
@@ -125,16 +120,9 @@ namespace Mono.Service.Repository
 
         public Task<IQueryable<VehicleMakeEntity>> ApplySortingAsync(IQueryable<VehicleMakeEntity> query, IVehicleMakeFilter filter)
         {
-            if (!string.IsNullOrWhiteSpace(filter.OrderBy) && !string.IsNullOrWhiteSpace(filter.OrderDirection))
+            if (filter?.OrderBy == nameof(IVehicleMake.Name))
             {
-                if (filter.OrderBy == nameof(IVehicleMake.Name))
-                {
-                    query = filter.OrderDirection == "asc" ? query.OrderBy(x => x.Name) : query.OrderByDescending(x => x.Name);
-                }
-                else
-                {
-                    query = query.OrderBy(x => x.Name);
-                }
+                query = filter?.OrderDirection == "asc" ? query.OrderBy(x => x.Name) : query.OrderByDescending(x => x.Name);
             }
             else
             {

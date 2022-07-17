@@ -14,7 +14,7 @@ namespace Mono.Service.Repository.Common
         #region Methods
        
         Task<PagedList<VehicleModel>> FindVehicleModel(IVehicleModelFilter filter);
-        Task DeleteAsync(Guid id);
+        Task Delete(Guid id);
 
         Task<VehicleModel> FindAsync(Guid id);
 

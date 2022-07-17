@@ -30,13 +30,12 @@ namespace Mono.Controllers
 
 
         // GET: VehicleModelRestModels
-        public async Task<ActionResult> Index(string sortOrder,string ids = "", string searchPhrase = "", int? page = 1, int? pageSize = 10)
+        public async Task<ActionResult> Index(string sortOrder, string searchPhrase = "", int? page = 1, int? pageSize = 10)
         {
             var filter = new VehicleModelFilter();
             filter.Page = page;
             filter.PageSize = pageSize;
-            filter.Ids = !String.IsNullOrWhiteSpace(ids) ? ids.Split(new string[] { "," }, StringSplitOptions.None).Select(x => new Guid(x)) : new List<Guid>();
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+           
             
             if (!String.IsNullOrEmpty(searchPhrase))
             {
@@ -160,7 +159,7 @@ namespace Mono.Controllers
         public async Task<ActionResult> DeleteConfirmed(Guid id)
         {
 
-            await VehicleModelService.DeleteVehicleModelAsync(id);
+            await VehicleModelService.DeleteVehicleModel(id);
             return RedirectToAction("Index");
         }
 

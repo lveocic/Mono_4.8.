@@ -12,7 +12,7 @@ namespace Mono.Service.Service.Common
     {
         #region Methods
         Task<PagedList<VehicleModel>> SearchVehicleModels(IVehicleModelFilter filter);
-        Task DeleteVehicleModelAsync(Guid id);
+        Task DeleteVehicleModel(Guid id);
 
         Task<VehicleModel> FindVehicleModelAsync(Guid id);
 

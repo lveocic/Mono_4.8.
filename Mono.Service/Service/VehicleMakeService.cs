@@ -31,9 +31,9 @@ namespace Mono.Service.Service
 
         #region Methods
 
-        public async Task DeleteVehicleMakeAsync(Guid id)
+        public bool DeleteVehicleMake(Guid id)
         {
-            await VehicleMakeRepository.DeleteAsync(id);
+           return VehicleMakeRepository.Delete(id);
         }
         public async Task<VehicleMake> FindVehicleMakeAsync(Guid id)
         {

@@ -37,13 +37,14 @@ namespace Mono.Service.Repository
 
         #region Methods
 
-        public async Task DeleteAsync(Guid id)
+        public Task Delete(Guid id)
         {
             try
             {
                 var vehicleModel = Context.VehicleModels.Find(id);
                 Context.VehicleModels.Remove(vehicleModel);
-                await Context.SaveChangesAsync();
+                Context.SaveChangesAsync();
+                return Task.CompletedTask;
             } 
             catch (Exception exception)
             {
