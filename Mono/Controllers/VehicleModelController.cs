@@ -60,8 +60,7 @@ namespace Mono.Controllers
                 var restModelList = new PagedList<VehicleModelRestModel>(list, result.PageIndex, result.PageSize, result.TotalCount);
                 return View(restModelList);
             }
-            var nullResult = new List<VehicleModelRestModel>();
-            return View(nullResult);
+            return View();
         }
 
         // GET: VehicleModelRestModels/Details/5
@@ -96,6 +95,7 @@ namespace Mono.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 vehicleModelRestModel.Id = Guid.NewGuid();
                 var vehicleModel = Mapper.Map<VehicleModel>(vehicleModelRestModel);
                 await VehicleModelService.InsertVehicleModelAsync(vehicleModel);

@@ -56,8 +56,7 @@ namespace Mono.Controllers
                 var restMakeList = new PagedList<VehicleMakeRestModel>(list, result.PageIndex, result.PageSize, result.TotalCount);
                 return View(restMakeList);
             }
-            var nullResult = new List<VehicleMakeRestModel>();
-            return View(nullResult);
+            return View();
         }
 
 
